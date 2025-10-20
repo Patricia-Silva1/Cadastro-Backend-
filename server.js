@@ -25,7 +25,6 @@ app.post('/usuarios', async (req, res) => {
   try {
     const { name, age, email } = req.body;
 
-    // 🔍 Validação rigorosa dos dados
     if (
       !name || typeof name !== 'string' || !name.trim() ||
       !email || typeof email !== 'string' || !email.trim() ||
@@ -36,7 +35,6 @@ app.post('/usuarios', async (req, res) => {
 
     const emailNormalizado = email.trim().toLowerCase();
 
-    // 🔎 Verifica se o e-mail já está cadastrado
     const existente = await prisma.user.findUnique({
       where: { email: emailNormalizado }
     });
@@ -45,7 +43,6 @@ app.post('/usuarios', async (req, res) => {
       return res.status(409).json({ error: 'E-mail já cadastrado.' });
     }
 
-    // ✅ Criação do novo usuário
     const novoUsuario = await prisma.user.create({
       data: { name: name.trim(), age, email: emailNormalizado }
     });
@@ -72,7 +69,6 @@ app.put('/usuarios/:id', async (req, res) => {
       return res.status(404).json({ error: 'Usuário não encontrado.' });
     }
 
-    // Verifica se o novo e-mail já está em uso por outro usuário
     if (email) {
       const emailNormalizado = email.trim().toLowerCase();
       const emailExistente = await prisma.user.findUnique({ where: { email: emailNormalizado } });
@@ -81,7 +77,6 @@ app.put('/usuarios/:id', async (req, res) => {
       }
     }
 
-    // Atualiza apenas os campos fornecidos
     const dadosAtualizacao = {};
     if (name && typeof name === 'string') dadosAtualizacao.name = name.trim();
     if (typeof age === 'number' && age >= 0 && age <= 120) dadosAtualizacao.age = age;
