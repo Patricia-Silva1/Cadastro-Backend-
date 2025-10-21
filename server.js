@@ -1,7 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import { PrismaClient } from '@prisma/client';
-import { ObjectId } from 'mongodb';
 
 const app = express();
 const prisma = new PrismaClient();
@@ -60,11 +59,11 @@ app.put('/usuarios/:id', async (req, res) => {
     const id = req.params.id;
     const { name, age, email } = req.body;
 
-    if (!ObjectId.isValid(id)) {
+    if (!/^[a-f\d]{24}$/i.test(id)) {
       return res.status(400).json({ error: 'ID inválido.' });
     }
 
-    const usuario = await prisma.user.findFirst({ where: { id } });
+    const usuario = await prisma.user.findUnique({ where: { id } });
     if (!usuario) {
       return res.status(404).json({ error: 'Usuário não encontrado.' });
     }
@@ -99,11 +98,11 @@ app.delete('/usuarios/:id', async (req, res) => {
   try {
     const id = req.params.id;
 
-    if (!ObjectId.isValid(id)) {
+    if (!/^[a-f\d]{24}$/i.test(id)) {
       return res.status(400).json({ error: 'ID inválido.' });
     }
 
-    const usuario = await prisma.user.findFirst({ where: { id } });
+    const usuario = await prisma.user.findUnique({ where: { id } });
     if (!usuario) {
       return res.status(404).json({ error: 'Usuário não encontrado.' });
     }
