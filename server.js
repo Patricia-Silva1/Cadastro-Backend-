@@ -59,10 +59,6 @@ app.put('/usuarios/:id', async (req, res) => {
     const id = req.params.id;
     const { name, age, email } = req.body;
 
-    if (!/^[a-f\d]{24}$/i.test(id)) {
-      return res.status(400).json({ error: 'ID inválido.' });
-    }
-
     const usuario = await prisma.user.findUnique({ where: { id } });
     if (!usuario) {
       return res.status(404).json({ error: 'Usuário não encontrado.' });
@@ -98,10 +94,6 @@ app.delete('/usuarios/:id', async (req, res) => {
   try {
     const id = req.params.id;
 
-    if (!/^[a-f\d]{24}$/i.test(id)) {
-      return res.status(400).json({ error: 'ID inválido.' });
-    }
-
     const usuario = await prisma.user.findUnique({ where: { id } });
     if (!usuario) {
       return res.status(404).json({ error: 'Usuário não encontrado.' });
@@ -115,7 +107,7 @@ app.delete('/usuarios/:id', async (req, res) => {
   }
 });
 
-// ✅ Inicialização do servidor
-app.listen(3001, () => {
-  console.log('🚀 Servidor rodando na porta 3001');
-});
+// ✅ Inicialização do servidor com porta dinâmica
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () => {
+console.log(`🚀 Servidor rodando na porta ${https://cadastro-api-dr5y.onrender.com}`);});
