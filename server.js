@@ -113,5 +113,6 @@ app.delete('/usuarios/:id', async (req, res) => {
 // ✅ Inicialização do servidor com porta dinâmica
 const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando na porta ${PORT}`);
+  const url = 'https://cadastro-api-dr5y.onrender.com';
+  console.log(`🚀 Servidor rodando na porta ${url}`);
 });
