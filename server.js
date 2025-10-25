@@ -109,10 +109,9 @@ app.delete('/usuarios/:id', async (req, res) => {
     res.status(500).json({ error: 'Erro ao deletar usuário', detalhes: error.message });
   }
 });
-
 // ✅ Inicialização do servidor com porta dinâmica
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
-  console.log('🚀 Servidor rodando na porta https://cadastro-api-dr5y.onrender.com/usuarios');
+  console.log(`🚀 Servidor rodando na porta ${PORT}`);
 });
